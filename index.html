@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+
+    <title>Intramurals 2526</title>
+
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: whitesmoke;
+            padding: 30px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #0d6efd;
+        }
+
+        /* Primary Button */
+        .btn-primary {
+            margin-top: 15px;
+            padding: 12px;
+            width: 100%;
+            background-color: #0d6efd;
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+        }
+
+        .result {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Intramurals 2025-2026</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index3.html">Players List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index2.html">Sign up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="index.html">Team checker</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="card mx-auto" style="width: 300px;">
+            <!-- content -->
+        </div>
+    </div>
+
+
+    <div class="container">
+        <h2>Intramurals Team Checker</h2>
+
+
+        <label>
+            <input type="checkbox" id="registered">
+            Confirmed Online Registration
+        </label><br><br>
+
+
+        <label>
+            <input type="checkbox" id="medical">
+            Confirmed Medical Clearance
+        </label><br><br>
+
+
+        <label>
+            Grade Level:
+            <select id="grade">
+                <option value="">--Select Grade--</option>
+                <option value="7">Grade 7</option>
+                <option value="8">Grade 8</option>
+                <option value="9">Grade 9</option>
+                <option value="10">Grade 10</option>
+            </select>
+        </label><br><br>
+
+
+        <label>
+            Section:
+            <select id="section">
+                <option value="">--Select Section--</option>
+                <option value="sapphire">Sapphire</option>
+                <option value="ruby">Ruby</option>
+                <option value="topaz">Topaz</option>
+                <option value="emerald">Emerald</option>
+            </select>
+        </label>
+
+
+        <button class="btn-primary" onclick="checkEligibility()">
+            Check Eligibility
+        </button>
+
+
+        <div class="result" id="result"></div>
+    </div>
+
+
+    <script>
+        function checkEligibility() {
+            const registered = document.getElementById("registered").checked;
+            const medical = document.getElementById("medical").checked;
+            const grade = parseInt(document.getElementById("grade").value);
+            const section = document.getElementById("section").value;
+            const result = document.getElementById("result");
+
+
+            const grade7 = ["sapphire", "ruby", "topaz", "emerald"];
+            const grade8 = ["sapphire", "ruby", "emerald"];
+            const grade9 = ["sapphire", "ruby", "topaz", "emerald"];
+            const grade10 = ["sapphire", "ruby", "emerald"];
+
+
+            if (!registered) {
+                result.innerHTML = "❌ Please register online first.";
+            }
+            else if (!medical) {
+                result.innerHTML = "❌ Please secure a medical clearance.";
+            }
+            else if (grade < 7 || grade > 10 || isNaN(grade)) {
+                result.innerHTML = "❌ Only Grades 7 to 10 are allowed.";
+            }
+            else if (grade === 7 && !grade7.includes(section)) {
+                result.innerHTML = "❌ Invalid section for Grade 7.";
+            }
+            else if (grade === 8 && !grade8.includes(section)) {
+                result.innerHTML = "❌ Invalid section for Grade 8.";
+            }
+            else if (grade === 9 && !grade9.includes(section)) {
+                result.innerHTML = "❌ Invalid section for Grade 9.";
+            }
+            else if (grade === 10 && !grade10.includes(section)) {
+                result.innerHTML = "❌ Invalid section for Grade 10.";
+            }
+            else {
+                let team;
+                
+
+
+                if (section === "sapphire") {
+                    team = "Blue Bears";
+                    
+                }
+
+                else if (section === "ruby") {
+                    team = "Red Bulldogs";
+                   
+                }
+                else if (section === "topaz") {
+                    team = "Yellow Tigers";
+                   
+                }
+                else if (section === "emerald") {
+                    team = "Green Hornets";
+                    
+                }
+
+            let imgSrc;
+            if (section === "sapphire") imgSrc = "blue_bears.png";
+            else if (section === "ruby") imgSrc = "red_bulldogs.png";
+            else if (section === "topaz") imgSrc = "yellow_tigers.png";
+            else if (section === "emerald") imgSrc = "green_hornets.png";
+
+                result.innerHTML = `
+        🎉 Congratulations! You are ELIGIBLE.<br>
+        🏆 Assigned Team: <strong>${team}</strong>
+        <img src="${imgSrc}" alt="${team}" width="150">
+      `;
+            }
+        }
+
+    </script>
+
+
+</body>
+
+</html>
